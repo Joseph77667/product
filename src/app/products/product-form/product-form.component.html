@@ -5,13 +5,11 @@
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-3">
     <div class="flex gap-4 w-full">
-      <!-- Name -->
       <div class="flex flex-col w-1/2">
         <label for="name">Name</label>
         <input id="name" formControlName="name" type="text" placeholder="Enter product name" class="input" />
       </div>
 
-      <!-- Code -->
       <div class="flex flex-col w-1/2">
         <label for="code">Code</label>
         <input id="code" formControlName="code" type="text" placeholder="Enter product code" class="input" />
@@ -19,26 +17,22 @@
     </div>
 
     <div class="flex gap-4 w-full">
-      <!-- Price -->
       <div class="flex flex-col w-1/2">
         <label for="price">Price</label>
         <input id="price" formControlName="price" type="number" placeholder="Price" class="input" />
       </div>
 
-      <!-- Quantity -->
       <div class="flex flex-col w-1/2">
         <label for="quantity">Quantity</label>
         <input id="quantity" formControlName="quantity" type="number" placeholder="Quantity" class="input" />
       </div>
     </div>
 
-    <!-- Description -->
     <div class="flex flex-col">
       <label for="description">Description</label>
       <textarea id="description" formControlName="description" placeholder="Enter description" class="input"></textarea>
     </div>
 
-    <!-- Image preview + upload -->
     <div class="flex flex-col">
       <label>Preview</label>
       <img [src]="imagePreview" alt="Image Preview" class="w-32 h-32 object-cover rounded mb-2" />

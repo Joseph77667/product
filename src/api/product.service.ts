@@ -31,15 +31,6 @@ export class ProductService {
       }
     });
   }
-  
-
-  getAllProducts1(page: number = 0, size: number = 6): Observable<any> {
-    const params = new HttpParams()
-      .set('page', page.toString())
-      .set('size', size.toString());
-      
-    return this.http.get<any>(`${this.baseUrl}/findAll`, { params });
-  }
 
   // Get product by ID
   getProductById(id: number): Observable<ProductResponse> {
@@ -57,14 +48,14 @@ export class ProductService {
   }
 
   // Get products with pagination
-  getProductsWithPager(page: number, limit: number, search?: string): Observable<PaginationResponse> {
-    let params = new HttpParams()
-      .set('page', page.toString())
-      .set('limit', limit.toString());
+  // getProductsWithPager(page: number, limit: number, search?: string): Observable<PaginationResponse> {
+  //   let params = new HttpParams()
+  //     .set('page', page.toString())
+  //     .set('limit', limit.toString());
 
-    if (search) {
-      params = params.set('search', search);
-    }
-    return this.http.get<PaginationResponse>(`${this.baseUrl}/findWithPager`, { params });
-  }
+  //   if (search) {
+  //     params = params.set('search', search);
+  //   }
+  //   return this.http.get<PaginationResponse>(`${this.baseUrl}/findWithPager`, { params });
+  // }
 }

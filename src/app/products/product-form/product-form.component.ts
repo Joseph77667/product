@@ -82,7 +82,6 @@ export class ProductFormComponent implements OnInit {
         alert(`Product ${this.isEdit ? 'updated' : 'created'} successfully`);
         this.router.navigate(['products'])
       },
-
       error: (err) => console.error(err)
     });
   }

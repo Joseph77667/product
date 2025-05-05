@@ -47,7 +47,6 @@ export class OrderListComponent implements OnInit {
   
   generatePagination() {
     const range: number[] = [];
-  
     const maxVisible = 5;
     const start = Math.max(0, this.page - Math.floor(maxVisible / 2));
     const end = Math.min(this.totalPages, start + maxVisible);
@@ -55,11 +54,10 @@ export class OrderListComponent implements OnInit {
     for (let i = start; i < end; i++) {
       range.push(i);
     }
-  
     this.paginationRange = range;
   }
 
-  confirmDeleteOrder(id: number | undefined): void {
+  showDeleteOrder(id: number | undefined): void {
     if (id !== undefined) {
       this.deleteOrderId = id;
       this.showConfirmDialog = true;
@@ -95,19 +93,24 @@ export class OrderListComponent implements OnInit {
     }
   }
 
-  private parseCSVData(csvData: string): OrderResponse[] {
-    const lines = csvData.split('\n');
-    const result: OrderResponse[] = [];
-    const headers = lines[0].split(',');
-    for (let i = 1; i < lines.length; i++) {
-      const obj: any = {};
-      const currentline = lines[i].split(',');
-      for (let j = 0; j < headers.length; j++) {
-        obj[headers[j].trim()] = currentline[j].trim();
-      }
-      result.push(obj as OrderResponse);
-    }
-    return result;
+  exportOrders() {
+    this.orderService.exportToExcel().subscribe(response => {
+      const blob = new Blob([response.body!], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      });
+
+      const contentDisposition = response.headers.get('Content-Disposition');
+      const filename = contentDisposition
+        ? contentDisposition.split('filename=')[1].replace(/"/g, '')
+        : 'orders.xlsx';
+
+      const link = document.createElement('a');
+      const url = window.URL.createObjectURL(blob);
+      link.href = url;
+      link.download = filename;
+      link.click();
+      window.URL.revokeObjectURL(url);
+    });
   }
 
   onSearchChange(event: Event): void {

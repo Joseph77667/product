@@ -35,7 +35,6 @@ export class OrderService {
     return this.http.put(`${this.apiUrl}/update/${orderId}`, updatedOrder);
   }
   
-  
   getAllOrders(
     page: number = 0,
     limit: number = 10,
@@ -58,6 +57,20 @@ export class OrderService {
   
   importOrders(formData: FormData ): Observable<any> {
     return this.http.post(`${this.apiUrl}/import`, formData);
+  }
+
+  exportToExcel() {
+    return this.http.get(`${this.apiUrl}/export`, {
+      responseType: 'blob',
+      observe: 'response'
+    });
+  }
+
+  downloadExcel() {
+    return this.http.get(`${this.apiUrl}/export`, {
+      responseType: 'blob',
+      observe: 'response'
+    });
   }
   
 }

@@ -1,10 +1,11 @@
 <div class="px-36 space-y-4">
-  <div class="flex items-center gap-4">
+  <div class="flex justify-between items-center gap-4">
     <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" (click)="createOrder()">
       Create New Order
     </button>
-    <!-- <input type="file" (change)="importOrders($event)" accept=".csv"
-           class="border rounded px-2 py-1 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700" /> -->
+    <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" (click)="exportOrders()">
+      Export All Orders As Excel File
+    </button>
   </div>
 
   <input type="text" placeholder="Search..." (input)="onSearchChange($event)"
@@ -40,7 +41,7 @@
           </td>
           <td class="px-4 py-2 space-x-2">
             <button class="bg-blue-500 px-2 py-1 rou text-white hover:underline" (click)="editOrder(order.id)">Edit</button>
-            <button class="bg-red-500 px-2 py-1 rou text-white hover:underline" (click)="confirmDeleteOrder(order.id)">Delete</button>
+            <button class="bg-red-500 px-2 py-1 rou text-white hover:underline" (click)="showDeleteOrder(order.id)">Delete</button>
           </td>
         </tr>
       </tbody>

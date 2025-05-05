@@ -1,0 +1,16 @@
+<nav class="bg-blue-600 text-white px-40 py-4 flex justify-between items-center">
+    <!-- Left: Logo -->
+    <div class="text-2xl font-bold">
+      <a routerLink="/">MyLogo</a>
+    </div>
+  
+    <!-- Right: Links -->
+    <div class="space-x-4">
+      <a routerLink="/products" routerLinkActive="underline font-semibold">Product List</a>
+      <a routerLink="/product/create" routerLinkActive="underline font-semibold"
+      >Product Form</a>
+      <a [routerLink]="['order-list']" routerLinkActive="underline font-semibold">Orders</a>
+      <a [routerLink]="['/create-order']" routerLinkActive="underline font-semibold">Create Order</a>
+    </div>
+  </nav>
+  

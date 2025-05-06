@@ -30,15 +30,15 @@
           <tr *ngFor="let item of orderDetails.orderItems; let i = index">
             <td class="border border-gray-400 px-4 py-2">{{ i + 1 }}</td>
             <td class="border border-gray-400 px-4 py-2">{{ item.productName }}</td>
-            <td class="border border-gray-400 px-4 py-2">{{ item.productPrice }}</td>
+            <td class="border border-gray-400 px-4 py-2">$ {{ item.productPrice }}</td>
             <td class="border border-gray-400 px-4 py-2">{{ item.quantity }}</td>
             <td class="border border-gray-400 px-4 py-2">
-              {{ item.productPrice * item.quantity }}
+              $ {{ item.productPrice * item.quantity }}
             </td>
           </tr>
           <tr class="bg-gray-100 font-bold">
             <td colspan="4" class="border border-gray-400 px-4 py-2 text-right">Grand Total</td>
-            <td class="border border-gray-400 px-4 py-2">{{ orderDetails.totalPrice }}</td>
+            <td class="border border-gray-400 px-4 py-2">$ {{ orderDetails.totalPrice }}</td>
           </tr>
         </tbody>
       </table>

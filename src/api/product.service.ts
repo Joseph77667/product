@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { ProductRequest, ProductResponse, PaginationResponse } from './model/type'; // Make sure the path is correct
+import { catchError, debounceTime, distinctUntilChanged, Observable, of, switchMap } from 'rxjs';
+import { ProductRequest, ProductResponse, PaginationResponse } from './model/type';
+import { FormControl } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +18,24 @@ export class ProductService {
     return this.http.post<ProductResponse>(`${this.baseUrl}/create`, formData);
   }
 
-  // Get all products
-  // getAllProducts1(page: number = 0, size: number = 8): Observable<ProductResponse[]> {
-  //   const params = { page: page.toString(), size: size.toString() };
-  //   return this.http.get<ProductResponse[]>(`${this.baseUrl}/findAll`, { params });
-  // }  
+  getAllProducts1(search: string = ''): Observable<ProductResponse[]> {
+    const params = new HttpParams().set('query', search);
+    return this.http.get<ProductResponse[]>(`${this.baseUrl}/findAll`, { params }).pipe(
+      catchError(() => of([])) 
+    );
+  }
+
+  // Create a search stream with debounce and distinctUntilChanged
+  createSearchStream(searchControl: FormControl): Observable<ProductResponse[]> {
+    return searchControl.valueChanges.pipe(
+      debounceTime(300),        // Wait 300ms after keystroke
+      distinctUntilChanged(),    // Only emit if value changed
+      switchMap(query => 
+        this.getAllProducts1(query) // Call your existing service method
+      )
+    );
+  }
+  
   getAllProducts(page: number, limit: number, searchValue: string = '') {
     return this.http.get<any>(`${this.baseUrl}/findWithPager`, {
       params: {
@@ -59,3 +73,4 @@ export class ProductService {
   //   return this.http.get<PaginationResponse>(`${this.baseUrl}/findWithPager`, { params });
   // }
 }
+

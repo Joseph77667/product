@@ -17,6 +17,7 @@ import { OrderDetailComponent } from './orders/order-detail/order-detail.compone
 import { UpdateOrderComponent } from './orders/update-order/update-order.component';
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
 import { ImportOrderComponent } from './orders/import-order/import-order.component';
+import { DeleteConfimationComponent } from './delete-confimation/delete-confimation.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { ImportOrderComponent } from './orders/import-order/import-order.compone
     UpdateOrderComponent,
     ConfirmDialogComponent,
     ImportOrderComponent,
-    
+    DeleteConfimationComponent,
   ],
   imports: [
     BrowserModule,

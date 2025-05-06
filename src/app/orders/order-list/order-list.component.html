@@ -12,44 +12,45 @@
     class="border border-gray-300 px-4 py-2 rounded w-full" />
 
   <div class="overflow-x-auto">
-    <table class="min-w-full bg-white shadow-lg rounded mt-2 border">
+    <table class="min-w-full table-auto bg-white shadow-lg rounded mt-2 border">
       <thead class="bg-gray-200">
         <tr>
           <th class="text-left px-4 py-2">ID</th>
-          <th class="text-left px-4 py-2">Customer Name</th>
-          <th class="text-left px-4 py-2">Phone Number</th>
+          <th class="text-left px-4 py-2 truncate">Customer Name</th>
+          <th class="text-left px-4 py-2 truncate">Phone Number</th>
           <th class="text-left px-4 py-2">Address</th>
-          <th class="text-left px-4 py-2">Order Items</th>
+          <th class="text-left px-4 py-2 truncate">Product Name</th>
+          <th class="text-left px-4 py-2 truncate">Price</th>
+          <th class="text-left px-4 py-2">Quantity</th>
           <th class="text-left px-4 py-2">Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let order of orders; let i = index" class="border-t">
-          <td class="px-4 py-2">{{ i + 1 }}</td>
-          <td>
-            <a [routerLink]="['/order', order.id]" class="text-blue-700 hover:underline">
-              {{ order.customerName }}
-            </a>
-          <td class="px-4 py-2">{{ order.customerPhone }}</td>
-          <td class="px-4 py-2 max-w-[150px] truncate">{{ order.address }}</td>
-          <td class="px-4 py-2">
-            <ul>
-              <li *ngFor="let item of order.orderItems">
-                {{ item.productName }} ({{ item.quantity }} x ${{ item.productPrice }})
-              </li>
-            </ul>
-          </td>
-          <td class="px-4 py-2 space-x-2">
-            <button class="bg-blue-500 px-2 py-1 rou text-white hover:underline"
-              (click)="editOrder(order.id)">Edit</button>
-            <button class="bg-red-500 px-2 py-1 rou text-white hover:underline"
-              (click)="showDeleteOrder(order.id)">Delete</button>
-          </td>
-        </tr>
+        <ng-container *ngFor="let order of orders; let i = index">
+          <tr *ngFor="let item of order.orderItems" class="border-t">
+            <td class="px-4 py-2">{{ i + 1 }}</td>
+            <td>
+              <a [routerLink]="['/order', order.id]" class="text-blue-700 truncate hover:underline">
+                {{ order.customerName }}
+              </a>
+            <td class="px-4 py-2">{{ order.customerPhone }}</td>
+            <td class="px-4 py-2 max-w-[150px] truncate">{{ order.address }}</td>
+            <td class="px-4 py-2">{{ item.productName}}</td>
+            <td class="px-4 py-2">$ {{ item.productPrice}}</td>
+            <td class="px-4 py-2">{{ item.quantity}}</td>
+            <td class="px-4 py-2 flex flex-row space-x-2">
+              <button class="bg-blue-500 px-2 py-1 rou text-white hover:underline"
+                (click)="editOrder(order.id)">Edit</button>
+              <button class="bg-red-500 px-2 py-1 rou text-white hover:underline"
+                (click)="showDeleteOrder(order.id)">Delete</button>
+            </td>
+          </tr>
+        </ng-container>
       </tbody>
     </table>
   </div>
 
+  <!-- Confirmation of Delete Part -->
   <div *ngIf="showConfirmDialog" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
     <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
       <h2 class="text-lg font-semibold mb-4">Confirm For Delete</h2>
@@ -65,7 +66,7 @@
     </div>
   </div>
 
-
+  <!-- Pagination part -->
   <div class="flex flex-col bg-white p-4 rounded shadow max-w-lg mx-auto">
     <div class="flex items-center justify-center space-x-2 text-sm">
       <button class="px-3 py-1 bg-gray-200 rounded disabled:opacity-50" (click)="onPageChange(0)"

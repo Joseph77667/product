@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrderResponse } from 'src/api/model/order-model';
 import { OrderService } from 'src/api/order.service';
-import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-order-list',
@@ -81,7 +80,6 @@ export class OrderListComponent implements OnInit {
     this.showConfirmDialog = false;
     this.deleteOrderId = undefined;
   }
-
 
   createOrder(): void {
     this.router.navigate(['/create-order']);

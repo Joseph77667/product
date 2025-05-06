@@ -1,14 +1,5 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-product',
-//   templateUrl: './product.component.html',
-//   styleUrls: ['./product.component.css']
-// })
-// export class ProductComponent {
-
-// }
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProductResponse } from 'src/api/model/type';
 import { ProductService } from 'src/api/product.service';
 
@@ -24,9 +15,10 @@ export class ProductComponent implements OnInit {
   pageSize = 8;
   totalItems = 0;
   totalPages = 0;
+  searchValue: string = '';
   isProductFound: Boolean = false;
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadProducts();
@@ -44,19 +36,22 @@ export class ProductComponent implements OnInit {
   //     }
   //   });
   // }
-  searchValue: string = '';
 
   loadProducts(): void {
     this.productService.getAllProducts(this.currentPage, this.pageSize, this.searchValue).subscribe({
-      next: (response) => {
-        this.products = response.items; 
-        this.totalItems = response.totalCount;
-        this.totalPages = response.totalPages;
+      next: (res) => {
+        this.products = res.items; 
+        this.totalItems = res.totalCount;
+        this.totalPages = res.totalPages;
       },
       error: (err) => {
         console.error('Error loading products:', err);
       }
     });
+  }
+
+  createProduct() {
+    this.router.navigate(['/product/create']);
   }
 
   onSearchChange(event: Event): void {

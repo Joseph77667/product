@@ -1,5 +1,7 @@
 <div class="container mx-auto p-5">
-  <h1 class="text-3xl font-semibold text-white mb-2 mx-32">Product List</h1>
+  <button class="bg-yellow-400 ml-32 mb-3 px-4 py-2 rounded hover:bg-blue-700" (click)="createProduct()">
+    Create New Product
+  </button>
   <div class="flex mx-32 gap-3 mb-4">
     <input
       type="text"
@@ -21,7 +23,7 @@
     <div class="grid sm:grid-cols-2 md:grid-cols-4 grid-cols-4 gap-6">
       <div
         *ngFor="let product of products"
-        class="bg-gray-300 rounded-md shadow-lg p-4"
+        class="bg-gray-200 rounded-md shadow-lg p-4"
       >
         <img
           *ngIf="product.imageName"
@@ -51,9 +53,9 @@
         </div>
       </div>
     </div>
-    <!-- Pagination Controls -->
-    <div *ngIf="products.length > 0" class="flex justify-center mt-8">
-      <nav class="flex flex-col rounded-md shadow-lg bg-white py-4 w-full">
+    <!-- Pagination Part -->
+    <div *ngIf="products.length > 0" class="flex justify-center my-8 border border-gray-700 rounded-md">
+      <nav class="flex flex-col rounded-md shadow-lg bg-gray-300 pt-4 w-full">
         <div class="flex gap-2 bg-white mx-auto">
           <button
             (click)="prevPage()"
@@ -70,7 +72,7 @@
               [class.bg-blue-500]="currentPage === i"
               [class.text-white]="currentPage === i"
               [class.fond-medium]="currentPage === i"
-              class="px-8 py-2 border-t border-b border-gray-300 text-gray-500 hover:bg-gray-50"
+              class="px-8 py-2 border-t border-b border-gray-300 text-gray-500"
             >
               {{ i + 1 }}
             </button>
@@ -86,7 +88,7 @@
         </div>
         <div
           *ngIf="products.length > 0"
-          class="text-center mt-2 text-md text-gray-600"
+          class="text-center my-2 text-md text-gray-600"
         >
           Page {{ currentPage + 1 }} of {{ totalPages }} ({{ totalItems }} total
           products)

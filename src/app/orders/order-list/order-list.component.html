@@ -24,8 +24,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let order of orders" class="border-t">
-          <td class="px-4 py-2">{{ order.id }}</td>
+        <tr *ngFor="let order of orders; let i = index" class="border-t">
+          <td class="px-4 py-2">{{ i + 1 }}</td>
           <td>
             <a [routerLink]="['/order', order.id]" class="text-blue-700 hover:underline">
               {{ order.customerName }}
@@ -40,8 +40,10 @@
             </ul>
           </td>
           <td class="px-4 py-2 space-x-2">
-            <button class="bg-blue-500 px-2 py-1 rou text-white hover:underline" (click)="editOrder(order.id)">Edit</button>
-            <button class="bg-red-500 px-2 py-1 rou text-white hover:underline" (click)="showDeleteOrder(order.id)">Delete</button>
+            <button class="bg-blue-500 px-2 py-1 rou text-white hover:underline"
+              (click)="editOrder(order.id)">Edit</button>
+            <button class="bg-red-500 px-2 py-1 rou text-white hover:underline"
+              (click)="showDeleteOrder(order.id)">Delete</button>
           </td>
         </tr>
       </tbody>
@@ -64,26 +66,31 @@
   </div>
 
 
-  <div class="flex items-center justify-center mt-4 space-x-2 text-sm bg-white p-4 rounded shadow max-w-lg mx-auto">
-    <button class="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-      (click)="onPageChange(0)" [disabled]="page === 0">First</button>
+  <div class="flex flex-col bg-white p-4 rounded shadow max-w-lg mx-auto">
+    <div class="flex items-center justify-center space-x-2 text-sm">
+      <button class="px-3 py-1 bg-gray-200 rounded disabled:opacity-50" (click)="onPageChange(0)"
+        [disabled]="page === 0">First</button>
   
-    <button class="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-      (click)="onPageChange(page - 1)" [disabled]="page === 0">Previous</button>
+      <button class="px-3 py-1 bg-gray-200 rounded disabled:opacity-50" (click)="onPageChange(page - 1)"
+        [disabled]="page === 0">Previous</button>
   
-    <ng-container *ngFor="let p of paginationRange">
-      <button class="px-3 py-1 rounded"
-        [ngClass]="{ 'bg-blue-500 text-white': p === page, 'bg-gray-100': p !== page }"
-        (click)="onPageChange(p)">
-        {{ p + 1 }}
-      </button>
-    </ng-container>
+      <ng-container *ngFor="let p of paginationRange">
+        <button class="px-3 py-1 rounded" [ngClass]="{ 'bg-blue-500 text-white': p === page, 'bg-gray-100': p !== page }"
+          (click)="onPageChange(p)">
+          {{ p + 1 }}
+        </button>
+      </ng-container>
   
-    <button class="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-      (click)="onPageChange(page + 1)" [disabled]="page + 1 >= totalPages">Next</button>
+      <button class="px-3 py-1 bg-gray-200 rounded disabled:opacity-50" (click)="onPageChange(page + 1)"
+        [disabled]="page + 1 >= totalPages">Next</button>
   
-    <button class="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-      (click)="onPageChange(totalPages - 1)" [disabled]="page + 1 >= totalPages">Last</button>
+      <button class="px-3 py-1 bg-gray-200 rounded disabled:opacity-50" (click)="onPageChange(totalPages - 1)"
+        [disabled]="page + 1 >= totalPages">Last</button>
+    </div>
+    <div *ngIf="orders.length > 0" class="text-center mt-1 text-md text-gray-600">
+      Page {{ page + 1 }} of {{ totalPages }} ({{ totalCount }} total
+      orders)
+    </div>
   </div>
-  
+
 </div>

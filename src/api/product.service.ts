@@ -13,7 +13,6 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  // Create product
   createProduct(formData: FormData): Observable<ProductResponse> {
     return this.http.post<ProductResponse>(`${this.baseUrl}/create`, formData);
   }
@@ -25,7 +24,6 @@ export class ProductService {
     );
   }
 
-  // Create a search stream with debounce and distinctUntilChanged
   createSearchStream(searchControl: FormControl): Observable<ProductResponse[]> {
     return searchControl.valueChanges.pipe(
       debounceTime(300),        // Wait 300ms after keystroke

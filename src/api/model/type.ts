@@ -8,6 +8,7 @@ export interface ProductRequest {
 }
 
 export interface ProductResponse {
+    totalQuantity: any;
     id: number;
     code: string;
     name: string;

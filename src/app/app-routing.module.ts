@@ -43,7 +43,7 @@ const routes: Routes = [
   },
   {
     path: 'edit-order/:id',
-    component: UpdateOrderComponent
+    component: CreateOrderComponent
   }
 ];
 

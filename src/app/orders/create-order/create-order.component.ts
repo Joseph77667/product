@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -184,25 +184,8 @@ export class CreateOrderComponent implements OnInit {
   }
   
   removeOrderItem(index: number): void {
-    const productId = this.orderItems.at(index).get('productId')?.value;
-    if (productId) {
-      this.selectedProductIds.delete(productId);
-    }
     this.orderItems.removeAt(index);
     this.filteredProductsList.splice(index, 1);
-  }
-
-  confirmDelete(id: number): void {
-    this.confirmDeleteIndex = id;
-  }
-
-  cancelDelete(): void {
-    this.confirmDeleteIndex = null;
-  }
-
-  deleteConfirmed(index: number): void {
-    this.removeOrderItem(index);
-    this.confirmDeleteIndex = null;
   }
 
   getAvailableQuantity(productId: number): number {
@@ -256,4 +239,37 @@ export class CreateOrderComponent implements OnInit {
     this.selectedProductIds.clear();
     this.addOrderItem();
   }
+
+  @ViewChild('fileInput') fileInput!: ElementRef;
+
+  importOrderExcel() {
+    this.fileInput.nativeElement.click(); 
+  }
+
+//   onFileSelected(event: any) {
+//     const file: File = event.target.files[0];
+//     if (file) {
+//       const formData = new FormData();
+//       formData.append('file', file);
+
+//       this.orderService.importOrders(formData).subscribe({
+//         next: (response) => { // Handle the successful response
+//           console.log('Import successful:', response);
+//           this.router.navigate(['/order-list']);
+//         },
+//         error: (err) => {
+//           console.error('Import failed:', err);
+//           let errorMessage = 'Import failed.';
+//           if (err.error instanceof Object && err.error.message) {
+//             errorMessage += ' ' + err.error.message
+//           } else if (typeof err.error === 'string') {
+//             errorMessage += ' ' + err.error; 
+//           } else if (err.message) {
+//             errorMessage += ' ' + err.message;
+//           }
+//           alert(errorMessage);
+//         },
+//       });
+//     }
+//   }
 }

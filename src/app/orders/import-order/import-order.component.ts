@@ -23,8 +23,22 @@ export class ImportOrderComponent {
       formData.append('file', file);
 
       this.orderService.importOrders(formData).subscribe({
-        next: () => this.router.navigate(['/order-list']),
-        error: (err) => alert('Import failed: ' + err.message)
+        next: (response) => { // Handle the successful response
+          console.log('Import successful:', response);
+          this.router.navigate(['/order-list']);
+        },
+        error: (err) => {
+          console.error('Import failed:', err);
+          let errorMessage = 'Import failed.';
+          if (err.error instanceof Object && err.error.message) {
+            errorMessage += ' ' + err.error.message
+          } else if (typeof err.error === 'string') {
+            errorMessage += ' ' + err.error; 
+          } else if (err.message) {
+            errorMessage += ' ' + err.message;
+          }
+          alert(errorMessage);
+        },
       });
     }
   }

@@ -62,4 +62,16 @@ export class OrderService {
     });
   }
 
+  exportToExcel1(search: string = ''): Observable<HttpResponse<Blob>>{
+    let param = new HttpParams();
+    if (search){
+      param = param.set('search', search);
+    }
+    return this.http.get(`${this.apiUrl}/exportExcel`,{
+      responseType: 'blob',
+      observe: 'response',
+      params : param
+    })
+  }
+
 }

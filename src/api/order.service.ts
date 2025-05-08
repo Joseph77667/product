@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { OrderRequest, OrderResponse } from './model/order-model';
 
@@ -50,10 +50,15 @@ export class OrderService {
     return this.http.post(`${this.apiUrl}/import`, formData);
   }
 
-  exportToExcel() {
+  exportToExcel(search: string = ''): Observable<HttpResponse<Blob>> {
+    let params = new HttpParams();
+    if (search) {
+      params = params.set('search', search);
+    }
     return this.http.get(`${this.apiUrl}/export`, {
       responseType: 'blob',
-      observe: 'response'
+      observe: 'response',
+      params: params,
     });
   }
 

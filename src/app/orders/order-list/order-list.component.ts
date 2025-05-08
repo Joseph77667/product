@@ -92,7 +92,7 @@ export class OrderListComponent implements OnInit {
   }
 
   exportOrders() {
-    this.orderService.exportToExcel().subscribe(response => {
+    this.orderService.exportToExcel(this.search).subscribe(response => {
       const blob = new Blob([response.body!], {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       });
